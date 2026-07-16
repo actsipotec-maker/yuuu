@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Home IoT Panel</title>
     
-    <!-- นำเข้าฟอนต์จาก Google Fonts (Mitr) เพื่อให้ตัวหนังสือสวยงาม -->
+    <!-- นำเข้าฟอนต์ Mitr จาก Google Fonts เพื่อความสวยงาม -->
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* --- ส่วนของการตกแต่ง (CSS) --- */
+        /* =========================================
+           ส่วนที่ 1: การตกแต่ง CSS (UI Design)
+           ========================================= */
         body {
-            background-color: #0B1120; /* สีพื้นหลังสีกรมท่าเข้ม */
+            background-color: #0d1117; /* สีพื้นหลังหลักแบบเข้ม */
             color: #ffffff;
             font-family: 'Mitr', sans-serif;
             display: flex;
@@ -22,11 +24,11 @@
         }
 
         .panel-container {
-            background-color: #1A2235; /* สีพื้นหลังของการ์ด */
+            background-color: #161b22; /* สีพื้นหลังของการ์ด */
             border-radius: 20px;
             padding: 30px;
-            width: 320px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.05);
+            width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(0, 255, 255, 0.05);
             border: 1px solid rgba(0, 255, 255, 0.1);
         }
 
@@ -37,20 +39,20 @@
 
         .header h1 {
             color: #00FFFF; /* สีฟ้า Neon */
-            font-size: 24px;
+            font-size: 26px;
             margin: 0;
             letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* แสงเรืองแสงของตัวหนังสือ */
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6); /* เอฟเฟกต์เรืองแสง */
         }
 
         .header p {
-            color: #8B9BB4;
-            font-size: 12px;
+            color: #8b949e;
+            font-size: 14px;
             margin: 5px 0 0 0;
         }
 
         .switch-row {
-            background-color: #232D42;
+            background-color: #21262d;
             border-radius: 12px;
             padding: 15px 20px;
             margin-bottom: 15px;
@@ -61,16 +63,19 @@
         }
 
         .switch-label {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* ตกแต่งปุ่ม Toggle Switch */
+        /* การออกแบบ Toggle Switch */
         .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 24px;
+            width: 54px;
+            height: 28px;
         }
 
         .switch input { 
@@ -83,27 +88,27 @@
             position: absolute;
             cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #4A5568;
+            background-color: #484f58;
             transition: .4s;
-            border-radius: 24px;
+            border-radius: 34px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
             background-color: white;
             transition: .4s;
             border-radius: 50%;
         }
 
-        /* เมื่อปุ่มถูกเปิด (Checked) */
+        /* เมื่อสวิตช์ถูกเปิด (ON) */
         input:checked + .slider {
             background-color: #00FFFF;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.8); /* แสงเรืองแสงสีฟ้า */
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
         }
 
         input:checked + .slider:before {
@@ -113,15 +118,18 @@
         .footer {
             text-align: center;
             margin-top: 30px;
-            font-size: 10px;
-            color: #00FFFF;
-            opacity: 0.6;
+            font-size: 12px;
+            color: #58a6ff;
+            opacity: 0.8;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
 
-    <!-- --- ส่วนของโครงสร้างหน้าเว็บ (HTML) --- -->
+    <!-- =========================================
+         ส่วนที่ 2: โครงสร้าง HTML (UI Layout)
+         ========================================= -->
     <div class="panel-container">
         <div class="header">
             <h1>SMART HOME</h1>
@@ -132,7 +140,8 @@
         <div class="switch-row">
             <span class="switch-label">💡 ช่องที่ 1 (D1)</span>
             <label class="switch">
-                <input type="checkbox" id="D1" onchange="toggleDevice('D1', this.checked)">
+                <!-- onchange จะเรียกฟังก์ชันอัปเดตข้อมูลเมื่อมีการกด -->
+                <input type="checkbox" id="CH1" onchange="updateDevice('CH1', this.checked)">
                 <span class="slider"></span>
             </label>
         </div>
@@ -141,7 +150,7 @@
         <div class="switch-row">
             <span class="switch-label">🔌 ช่องที่ 2 (D2)</span>
             <label class="switch">
-                <input type="checkbox" id="D2" onchange="toggleDevice('D2', this.checked)">
+                <input type="checkbox" id="CH2" onchange="updateDevice('CH2', this.checked)">
                 <span class="slider"></span>
             </label>
         </div>
@@ -150,7 +159,7 @@
         <div class="switch-row">
             <span class="switch-label">📺 ช่องที่ 3 (D5)</span>
             <label class="switch">
-                <input type="checkbox" id="D5" onchange="toggleDevice('D5', this.checked)">
+                <input type="checkbox" id="CH3" onchange="updateDevice('CH3', this.checked)">
                 <span class="slider"></span>
             </label>
         </div>
@@ -159,7 +168,7 @@
         <div class="switch-row">
             <span class="switch-label">❄️ ช่องที่ 4 (D6)</span>
             <label class="switch">
-                <input type="checkbox" id="D6" onchange="toggleDevice('D6', this.checked)">
+                <input type="checkbox" id="CH4" onchange="updateDevice('CH4', this.checked)">
                 <span class="slider"></span>
             </label>
         </div>
@@ -167,56 +176,60 @@
         <div class="footer">
             ผู้พัฒนาระบบ<br>
             ครูวิทยากร วรรณา<br>
-            แผนกอิเล็กทรอนิกส์
+            แผนกอิเล็กทรอนิกส์<br>
+            วิทยาลัยสารพัดช่างศรีสะเกษ
         </div>
     </div>
 
-    <!-- --- ส่วนของการทำงานและเชื่อมต่อ Firebase (JavaScript) --- -->
-    <!-- นำเข้า Firebase SDK เวอร์ชัน 8 -->
+    <!-- =========================================
+         ส่วนที่ 3: JavaScript และ Firebase 
+         ========================================= -->
+    <!-- นำเข้า Firebase SDK v8 -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <script>
-        // 1. นำ Config จาก Firebase ของคุณมาใส่ตรงนี้
-        // ** ต้องแก้ไขส่วนนี้ให้เป็นโปรเจกต์ของคุณเอง **
+        // --- ส่วนที่ต้องแก้ไข: ใส่ข้อมูล Firebase ของคุณ ---
+        // คุณสามารถหาข้อมูลเหล่านี้ได้ที่เมนู Project Settings ใน Firebase Console
         const firebaseConfig = {
-            apiKey: "ใส่_API_KEY_ของคุณที่นี่",
-            authDomain: "ใส่_PROJECT_ID_ของคุณ.firebaseapp.com",
-            databaseURL: "https://ใส่_PROJECT_ID_ของคุณ-default-rtdb.firebaseio.com",
-            projectId: "ใส่_PROJECT_ID_ของคุณ",
-            storageBucket: "ใส่_PROJECT_ID_ของคุณ.appspot.com",
-            messagingSenderId: "ใส่_SENDER_ID_ของคุณ",
-            appId: "ใส่_APP_ID_ของคุณ"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com", // สำคัญมาก! ต้องมี
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
-        // 2. เริ่มต้นการทำงานของ Firebase
+        // เริ่มต้นการทำงานของ Firebase
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        const database = firebase.database();
 
-        // ระบุ Path ในฐานข้อมูล (ตั้งชื่อว่า SmartHome)
-        const dbRef = db.ref('SmartHome');
+        // กำหนดตำแหน่ง (Path) ในฐานข้อมูลที่จะเก็บสถานะสวิตช์
+        // ในที่นี้เราจะเก็บไว้ในโฟลเดอร์ชื่อ 'SmartHome/Devices'
+        const devicesRef = database.ref('SmartHome/Devices');
 
-        // 3. ฟังก์ชันสำหรับส่งค่าไป Firebase เมื่อผู้ใช้กดสวิตช์
-        function toggleDevice(channel, state) {
-            // อัปเดตข้อมูลไปที่ฐานข้อมูล เช่น SmartHome/D1 = true
-            dbRef.child(channel).set(state)
-            .then(() => {
-                console.log(channel + " เปลี่ยนสถานะเป็น: " + state);
-            })
-            .catch((error) => {
-                console.error("เกิดข้อผิดพลาด: ", error);
-            });
+        // ฟังก์ชันสำหรับส่งคำสั่งไปที่ Firebase เมื่อผู้ใช้คลิกสวิตช์
+        function updateDevice(channelName, isChecked) {
+            devicesRef.child(channelName).set(isChecked)
+                .then(() => {
+                    console.log(`อัปเดต ${channelName} เป็น ${isChecked} สำเร็จ`);
+                })
+                .catch((error) => {
+                    console.error("เกิดข้อผิดพลาดในการอัปเดต:", error);
+                    // หากอัปเดตไม่สำเร็จ ให้ดีดสวิตช์กลับไปค่าเดิม (ถ้าต้องการ)
+                });
         }
 
-        // 4. ฟังก์ชันสำหรับดึงค่าแบบ Real-time จาก Firebase มาแสดงผลบนหน้าเว็บ
-        dbRef.on('value', (snapshot) => {
+        // ฟังก์ชันสำหรับรับค่าจาก Firebase มาแสดงผล (Real-time Sync)
+        devicesRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // เช็คค่าแต่ละช่องและอัปเดตปุ่มบนหน้าเว็บให้ตรงกัน
-                if(data.D1 !== undefined) document.getElementById('D1').checked = data.D1;
-                if(data.D2 !== undefined) document.getElementById('D2').checked = data.D2;
-                if(data.D5 !== undefined) document.getElementById('D5').checked = data.D5;
-                if(data.D6 !== undefined) document.getElementById('D6').checked = data.D6;
+                // เช็คว่ามีข้อมูลของแต่ละช่องไหม ถ้ามีให้ปรับสวิตช์บนเว็บให้ตรงกัน
+                if(data.CH1 !== undefined) document.getElementById('CH1').checked = data.CH1;
+                if(data.CH2 !== undefined) document.getElementById('CH2').checked = data.CH2;
+                if(data.CH3 !== undefined) document.getElementById('CH3').checked = data.CH3;
+                if(data.CH4 !== undefined) document.getElementById('CH4').checked = data.CH4;
             }
         });
     </script>
